@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+{% load leaflet_tags %}
+<head>
+    {% leaflet_js %}
+    {% leaflet_css %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Moldova Map</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #gis {
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'dist/leaflet.groupedlayercontrol.min.css' %}">
+    <script type="application/javascript" src="{% static 'dist/leaflet.ajax.js' %}"></script>
+    <script type="application/javascript" src="{% static 'dist/leaflet.groupedlayercontrol.min.js' %}"></script>
+
+</head>
+<body>
+
+
+<script type="application/javascript">
+    function our_layers(map, options) {
+
+        var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
+        var OpenTopoMap = L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            maxZoom: 17,
+            attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+        });
+
+        function raionStyle(feature) {
+            return {
+                fillColor: "#afbbda",
+                fillOpacity: 0,
+                color: "#0048ff",
+                weight: 2,
+            };
+        }
+
+        function moldovaStyle(feature) {
+            return {
+                fillColor: "#afbbda",
+                fillOpacity: 0,
+                color: "orange",
+                weight: 2,
+            };
+        }
+
+        function arieStyle(feature) {
+            return {
+                fillColor: "#b8cba8",
+                fillOpacity: 0.5,
+                color: "#32793a",
+                weight: 2,
+            };
+        }
+
+        var localitate = new L.GeoJSON.AJAX("{% url 'map:localitate' %}", {
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng,
+                    {
+                        radius: 3,
+                        fillColor: "#ff7800",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    });
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.name.toString());
+            }
+
+        });
+
+
+        var moldova = new L.GeoJSON.AJAX("{% url 'map:tara' %}",
+            {style: moldovaStyle}
+        );
+
+        var raion = new L.GeoJSON.AJAX("{% url 'map:raion' %}",
+            {
+                style: raionStyle,
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.name.toString());
+                }
+            }
+        );
+
+        var arie = new L.GeoJSON.AJAX("{% url 'map:arie' %}",
+            {
+                style: arieStyle,
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.name.toString());
+                }
+            }
+        );
+
+        var ariepoint = new L.GeoJSON.AJAX("{% url 'map:ariepoint' %}",
+            {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng,
+                        {
+                            radius: 3,
+                            fillColor: "#32793a",
+                            color: "#000",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.denumirea.toString());
+                }
+            }
+        );
+
+        var locatie = new L.GeoJSON.AJAX("{% url 'map:locatie' %}", {
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.name.toString());
+            }
+        });
+
+        osm.addTo(map);
+        moldova.addTo(map);
+        arie.addTo(map);
+
+        var baseLayers = {
+            "OpenStreetMap": osm,
+            "OpenTopoMap": OpenTopoMap
+        };
+
+        var groupedOverlays = {
+            "Administrativ": {
+                "Hotarul R.Moldova": moldova,
+                "Raioane": raion,
+                "Localități": localitate,
+            },
+            "APS": {
+                "Arii Protejate": arie,
+                "Arii Protejate (puncte)": ariepoint,
+            },
+            "Altele": {
+                "Locații": locatie,
+            }
+        };
+        L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+
+
+        L.Control.textbox = L.Control.extend({
+            onAdd: function (map) {
+                var text = L.DomUtil.create('div');
+                text.id = "info_text";
+                text.innerHTML = "<h1>Harta Republicii Moldova cu Ariile Protejate</h1>"
+                return text;
+            }
+        });
+        L.control.textbox = function (opts) {
+            return new L.Control.textbox(opts);
+        }
+        L.control.textbox({position: 'bottomright'}).addTo(map);
+
+
+    }
+
+
+</script>
+
+
+{% leaflet_map 'gis' callback="window.our_layers" %}
+</body>
+</html>
