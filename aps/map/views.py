@@ -5,7 +5,7 @@ from .models import Area, Country, District, Locality, Location, AreaPoint
 
 
 class MapPageView(TemplateView):
-    template_name = 'map.html'
+    template_name = 'map/main.html'
 
 
 def area_dataset(request):

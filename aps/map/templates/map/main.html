@@ -1,7 +1,8 @@
-<!doctype html>
-<html lang="en">
 {% load static %}
 {% load leaflet_tags %}
+
+<!doctype html>
+<html lang="en">
 <head>
     {% leaflet_js %}
     {% leaflet_css %}
@@ -97,7 +98,7 @@
 
         var district = new L.GeoJSON.AJAX("{% url 'map:district' %}",
             {
-                style: raionStyle,
+                style: districtStyle,
                 onEachFeature: function (feature, layer) {
                     layer.bindPopup(feature.properties.name.toString());
                 }
