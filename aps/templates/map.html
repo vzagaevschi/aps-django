@@ -15,6 +15,7 @@
             height: 100%;
             margin: 0;
         }
+
         #gis {
             width: 100%;
             height: 100%;
@@ -22,9 +23,11 @@
 
     </style>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'dist/leaflet.groupedlayercontrol.min.css' %}">
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'dist/leaflet.groupedlayercontrol.min.css' %}">
     <script type="application/javascript" src="{% static 'dist/leaflet.ajax.js' %}"></script>
-    <script type="application/javascript" src="{% static 'dist/leaflet.groupedlayercontrol.min.js' %}"></script>
+    <script type="application/javascript"
+            src="{% static 'dist/leaflet.groupedlayercontrol.min.js' %}"></script>
 
 </head>
 <body>
@@ -42,7 +45,7 @@
             attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
         });
 
-        function raionStyle(feature) {
+        function districtStyle(feature) {
             return {
                 fillColor: "#afbbda",
                 fillOpacity: 0,
@@ -69,7 +72,7 @@
             };
         }
 
-        var localitate = new L.GeoJSON.AJAX("{% url 'map:localitate' %}", {
+        var locality = new L.GeoJSON.AJAX("{% url 'map:locality' %}", {
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng,
                     {
@@ -88,11 +91,11 @@
         });
 
 
-        var moldova = new L.GeoJSON.AJAX("{% url 'map:tara' %}",
+        var moldova = new L.GeoJSON.AJAX("{% url 'map:country' %}",
             {style: moldovaStyle}
         );
 
-        var raion = new L.GeoJSON.AJAX("{% url 'map:raion' %}",
+        var district = new L.GeoJSON.AJAX("{% url 'map:district' %}",
             {
                 style: raionStyle,
                 onEachFeature: function (feature, layer) {
@@ -101,7 +104,7 @@
             }
         );
 
-        var arie = new L.GeoJSON.AJAX("{% url 'map:arie' %}",
+        var area = new L.GeoJSON.AJAX("{% url 'map:area' %}",
             {
                 style: arieStyle,
                 onEachFeature: function (feature, layer) {
@@ -110,7 +113,7 @@
             }
         );
 
-        var ariepoint = new L.GeoJSON.AJAX("{% url 'map:ariepoint' %}",
+        var area_point = new L.GeoJSON.AJAX("{% url 'map:area_point' %}",
             {
                 pointToLayer: function (feature, latlng) {
                     return L.circleMarker(latlng,
@@ -129,7 +132,7 @@
             }
         );
 
-        var locatie = new L.GeoJSON.AJAX("{% url 'map:locatie' %}", {
+        var location = new L.GeoJSON.AJAX("{% url 'map:location' %}", {
             onEachFeature: function (feature, layer) {
                 layer.bindPopup(feature.properties.name.toString());
             }
@@ -137,7 +140,7 @@
 
         osm.addTo(map);
         moldova.addTo(map);
-        arie.addTo(map);
+        area.addTo(map);
 
         var baseLayers = {
             "OpenStreetMap": osm,
@@ -146,16 +149,16 @@
 
         var groupedOverlays = {
             "Administrativ": {
-                "Hotarul R.Moldova": moldova,
-                "Raioane": raion,
-                "Localități": localitate,
+                "Border of Moldova": moldova,
+                "Districts": district,
+                "Localities": locality,
             },
             "APS": {
-                "Arii Protejate": arie,
-                "Arii Protejate (puncte)": ariepoint,
+                "Protected Areas": area,
+                "Protected Areas (points)": area_point,
             },
-            "Altele": {
-                "Locații": locatie,
+            "Other": {
+                "Locations": location,
             }
         };
         L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
@@ -165,7 +168,7 @@
             onAdd: function (map) {
                 var text = L.DomUtil.create('div');
                 text.id = "info_text";
-                text.innerHTML = "<h1>Harta Republicii Moldova cu Ariile Protejate</h1>"
+                text.innerHTML = "<h1>Republic of Moldova: Protected Areas</h1>"
                 return text;
             }
         });

@@ -1,10 +1,8 @@
 import os
 from django.contrib.gis.utils import LayerMapping
-from .models import Arie, Tara, Rn, Localitate, AriePoint
+from .models import Area, AreaPoint, Country, District, Locality, Location
 
-
-# Auto-generated `LayerMapping` dictionary for Arii model
-arie_mapping = {
+area_mapping = {
     'gid': 'gid',
     'id': 'id',
     'categoria': 'categoria',
@@ -12,17 +10,13 @@ arie_mapping = {
     'geom': 'MULTIPOLYGON',
 }
 
-
-# Auto-generated `LayerMapping` dictionary for Moldova model
-tara_mapping = {
+country_mapping = {
     'name': 'name',
     'cuatm': 'cuatm',
     'geom': 'MULTIPOLYGON',
 }
 
-
-# Auto-generated `LayerMapping` dictionary for Raioane model
-raion_mapping = {
+district_mapping = {
     'name': 'name',
     'type': 'type',
     'engtype': 'engtype',
@@ -31,9 +25,7 @@ raion_mapping = {
     'geom': 'MULTIPOLYGON',
 }
 
-
-# Auto-generated `LayerMapping` dictionary for Localitati model
-localitate_mapping = {
+locality_mapping = {
     'id': 'id',
     'osm_id': 'osm_id',
     'code': 'code',
@@ -43,7 +35,7 @@ localitate_mapping = {
     'geom': 'MULTIPOINT',
 }
 
-ariepoint_mapping = {
+area_point_mapping = {
     'objectid': 'OBJECTID',
     'id': 'ID',
     'denumirea': 'DENUMIREA',
@@ -55,33 +47,44 @@ ariepoint_mapping = {
     'geom': 'MULTIPOINT',
 }
 
-arie_shp = os.path .abspath(os.path.join(os.path.dirname(__file__), 'data/geo_ap_pol_4326.shp'))
-tara_shp = os.path .abspath(os.path.join(os.path.dirname(__file__), 'data/geo_mda_adm0_pol_4326.shp'))
-raion_shp = os.path .abspath(os.path.join(os.path.dirname(__file__), 'data/geo_mda_adm1_pol_4326.shp'))
-localitate_shp = os.path .abspath(os.path.join(os.path.dirname(__file__), 'data/geo_mda_adm2_point_4326.shp'))
-ariepoint_shp = os.path .abspath(os.path.join(os.path.dirname(__file__), 'data/ap_4326.shp'))
+area_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                        'data/geo_ap_pol_4326.shp'))
+country_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                           'data/geo_mda_adm0_pol_4326.shp'))
+district_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                            'data/geo_mda_adm1_pol_4326.shp'))
+locality_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                            'data/geo_mda_adm2_point_4326.shp'))
+area_point_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                              'data/ap_4326.shp'))
 
 
-def run_ariepoint(verbose=True):
-    lm = LayerMapping(AriePoint, ariepoint_shp, ariepoint_mapping, transform=False, encoding='UTF-8')
+def run_area_point(verbose=True):
+    lm = LayerMapping(AreaPoint, area_point_shp, area_point_mapping,
+                      transform=False, encoding='UTF-8')
     lm.save(strict=True, verbose=verbose)
 
 
-def run_arie(verbose=True):
-    lm = LayerMapping(Arie, arie_shp, arie_mapping, transform=False, encoding='UTF-8')
+def run_area(verbose=True):
+    lm = LayerMapping(Area, area_shp, area_mapping, transform=False,
+                      encoding='UTF-8')
     lm.save(strict=True, verbose=verbose)
 
 
-def run_tara(verbose=True):
-    lm = LayerMapping(Tara, tara_shp, tara_mapping, transform=False, encoding='UTF-8')
+def run_country(verbose=True):
+    lm = LayerMapping(Country, country_shp, country_mapping, transform=False,
+                      encoding='UTF-8')
     lm.save(strict=True, verbose=verbose)
 
 
-def run_raion(verbose=True):
-    lm = LayerMapping(Rn, raion_shp, raion_mapping, transform=False, encoding='UTF-8')
+def run_district(verbose=True):
+    lm = LayerMapping(District, district_shp, district_mapping,
+                      transform=False,
+                      encoding='UTF-8')
     lm.save(strict=True, verbose=verbose)
 
 
-def run_localitate(verbose=True):
-    lm = LayerMapping(Localitate, localitate_shp, localitate_mapping, transform=False, encoding='UTF-8')
+def run_locality(verbose=True):
+    lm = LayerMapping(Locality, locality_shp, locality_mapping,
+                      transform=False, encoding='UTF-8')
     lm.save(strict=True, verbose=verbose)

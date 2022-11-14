@@ -1,36 +1,36 @@
 from django.contrib import admin
-from .models import Arie, Tara, Rn, Localitate, AriePoint, Locatie
+from .models import Area, Country, District, Locality, AreaPoint, Location
 # from django.contrib.gis.db import OSMGeoAdmin
 from leaflet.admin import LeafletGeoAdmin
 
 
-class ArieAdmin(LeafletGeoAdmin):
+class AreaAdmin(LeafletGeoAdmin):
     list_display = ('name', 'id')
 
 
-class TaraAdmin(LeafletGeoAdmin):
+class CountryAdmin(LeafletGeoAdmin):
     list_display = ('name', 'cuatm')
 
 
-class RnAdmin(LeafletGeoAdmin):
+class DistrictAdmin(LeafletGeoAdmin):
     list_display = ('name', 'type')
 
 
-class LocalitateAdmin(LeafletGeoAdmin):
+class LocalityAdmin(LeafletGeoAdmin):
     list_display = ('name', 'population')
 
 
-class AriePointAdmin(LeafletGeoAdmin):
+class AreaPointAdmin(LeafletGeoAdmin):
     list_display = ('denumirea', 'categorie')
 
 
-class LocatieAdmin(LeafletGeoAdmin):
+class LocationAdmin(LeafletGeoAdmin):
     list_display = ('name', 'location')
 
 
-admin.site.register(Arie, ArieAdmin)
-admin.site.register(Tara, TaraAdmin)
-admin.site.register(Rn, RnAdmin)
-admin.site.register(Localitate, LocalitateAdmin)
-admin.site.register(AriePoint, AriePointAdmin)
-admin.site.register(Locatie, LocatieAdmin)
+admin.site.register(Area, AreaAdmin)
+admin.site.register(Country, CountryAdmin)
+admin.site.register(District, DistrictAdmin)
+admin.site.register(Locality, LocalityAdmin)
+admin.site.register(AreaPoint, AreaPointAdmin)
+admin.site.register(Location, LocationAdmin)

@@ -1,38 +1,38 @@
 from django.core.serializers import serialize
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from .models import Arie, Tara, Rn, Localitate, AriePoint, Locatie
+from .models import Area, Country, District, Locality, Location, AreaPoint
 
 
 class MapPageView(TemplateView):
     template_name = 'map.html'
 
 
-def arie_dataset(request):
-    arie = serialize('geojson', Arie.objects.all())
-    return HttpResponse(arie, content_type='json')
+def area_dataset(request):
+    area = serialize('geojson', Area.objects.all())
+    return HttpResponse(area, content_type='json')
 
 
-def tara_dataset(request):
-    tara = serialize('geojson', Tara.objects.all())
-    return HttpResponse(tara, content_type='json')
+def country_dataset(request):
+    country = serialize('geojson', Country.objects.all())
+    return HttpResponse(country, content_type='json')
 
 
-def raion_dataset(request):
-    raion = serialize('geojson', Rn.objects.all())
-    return HttpResponse(raion, content_type='json')
+def district_dataset(request):
+    district = serialize('geojson', District.objects.all())
+    return HttpResponse(district, content_type='json')
 
 
-def localitate_dataset(request):
-    localitate = serialize('geojson', Localitate.objects.all())
-    return HttpResponse(localitate, content_type='json')
+def locality_dataset(request):
+    locality = serialize('geojson', Locality.objects.all())
+    return HttpResponse(locality, content_type='json')
 
 
-def ariepoint_dataset(request):
-    ariepoint = serialize('geojson', AriePoint.objects.all())
-    return HttpResponse(ariepoint, content_type='json')
+def area_point_dataset(request):
+    area_point = serialize('geojson', AreaPoint.objects.all())
+    return HttpResponse(area_point, content_type='json')
 
 
-def locatie_dataset(request):
-    locatie = serialize('geojson', Locatie.objects.all())
-    return HttpResponse(locatie, content_type='json')
+def location_dataset(request):
+    location = serialize('geojson', Location.objects.all())
+    return HttpResponse(location, content_type='json')

@@ -2,9 +2,7 @@ from django.contrib.gis.db import models
 from django.db.models import Manager as GeoManager
 
 
-# This is an auto-generated Django model module created by ogrinspect.
-
-class Arie(models.Model):
+class Area(models.Model):
     gid = models.BigIntegerField()
     id = models.CharField(max_length=3, primary_key=True)
     categoria = models.CharField(max_length=100)
@@ -12,19 +10,19 @@ class Arie(models.Model):
     geom = models.MultiPolygonField(srid=4326)
 
     class Meta:
-        verbose_name_plural = 'Arii Protejate'
+        verbose_name_plural = 'Protected Areas'
 
 
-class Tara(models.Model):
+class Country(models.Model):
     name = models.CharField(max_length=254)
     cuatm = models.CharField(max_length=254)
     geom = models.MultiPolygonField(srid=4326)
 
     class Meta:
-        verbose_name_plural = 'Țări'
+        verbose_name_plural = 'Countries'
 
 
-class Rn(models.Model):
+class District(models.Model):
     name = models.CharField(max_length=254)
     type = models.CharField(max_length=50)
     engtype = models.CharField(max_length=50)
@@ -32,12 +30,11 @@ class Rn(models.Model):
     hasc = models.CharField(max_length=10)
     geom = models.MultiPolygonField(srid=4326)
 
-
     class Meta:
-        verbose_name_plural = 'Raioane'
+        verbose_name_plural = 'Districts'
 
 
-class Localitate(models.Model):
+class Locality(models.Model):
     id = models.BigIntegerField(primary_key=True)
     osm_id = models.CharField(max_length=10)
     code = models.BigIntegerField()
@@ -47,10 +44,10 @@ class Localitate(models.Model):
     geom = models.MultiPointField(srid=4326)
 
     class Meta:
-        verbose_name_plural = 'Localități'
+        verbose_name_plural = 'Localities'
 
 
-class Locatie(models.Model):
+class Location(models.Model):
     name = models.CharField(max_length=20)
     location = models.PointField(srid=4326)
     objects = GeoManager()
@@ -59,10 +56,10 @@ class Locatie(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = 'Locații'
+        verbose_name_plural = 'Locations'
 
 
-class AriePoint(models.Model):
+class AreaPoint(models.Model):
     objectid = models.BigIntegerField()
     id = models.FloatField(primary_key=True)
     denumirea = models.CharField(max_length=254)
@@ -77,5 +74,4 @@ class AriePoint(models.Model):
     #     return self.AriePoint
 
     class Meta:
-        verbose_name_plural = 'Arii Protejate (puncte)'
-
+        verbose_name_plural = 'Protected Areas (points)'
