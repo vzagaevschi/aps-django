@@ -62,29 +62,29 @@ area_point_shp = os.path.abspath(os.path.join(os.path.dirname(__file__),
 def run_area_point(verbose=True):
     lm = LayerMapping(AreaPoint, area_point_shp, area_point_mapping,
                       transform=False, encoding='UTF-8')
-    lm.save(strict=True, verbose=verbose)
+    lm.save(strict=True, verbose=False)
 
 
 def run_area(verbose=True):
     lm = LayerMapping(Area, area_shp, area_mapping, transform=False,
                       encoding='UTF-8')
-    lm.save(strict=True, verbose=verbose)
+    lm.save(strict=True, verbose=False)
 
 
 def run_country(verbose=True):
     lm = LayerMapping(Country, country_shp, country_mapping, transform=False,
                       encoding='UTF-8')
-    lm.save(strict=True, verbose=verbose)
+    lm.save(strict=True, verbose=False)
 
 
 def run_district(verbose=True):
     lm = LayerMapping(District, district_shp, district_mapping,
                       transform=False,
                       encoding='UTF-8')
-    lm.save(strict=True, verbose=verbose)
+    lm.save(strict=True, verbose=False)
 
 
 def run_locality(verbose=True):
     lm = LayerMapping(Locality, locality_shp, locality_mapping,
                       transform=False, encoding='UTF-8')
-    lm.save(strict=True, verbose=verbose)
+    lm.save(strict=True, verbose=False)
