@@ -26,7 +26,7 @@ with open('secret_key.txt') as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -124,13 +124,15 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-if DEBUG:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, 'static')
-    ]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# if DEBUG:
+#     STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR, 'static')
+#     ]
+# else:
+#     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
