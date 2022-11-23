@@ -1,6 +1,7 @@
 /aps/map/data/
 
 .idea/
+.res/
 
 # Created by https://www.gitignore.io/api/macos,linux,django,python,pycharm
 

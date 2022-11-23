@@ -1,7 +1,6 @@
 {% load static %}
 {% load leaflet_tags %}
 
-<!doctype html>
 <html lang="en">
 <head>
     {% leaflet_js %}
@@ -21,8 +20,25 @@
             width: 100%;
             height: 100%;
         }
-
     </style>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/icon/favicon.png' %}"/>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Quicksand:wght@600;700&display=swap"
+            rel="stylesheet"
+    />
+
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+
+    <!-- Template Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 
     <link rel="stylesheet" type="text/css"
           href="{% static 'dist/leaflet.groupedlayercontrol.min.css' %}">
@@ -165,24 +181,43 @@
         L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
 
 
-        L.Control.textbox = L.Control.extend({
-            onAdd: function (map) {
-                var text = L.DomUtil.create('div');
-                text.id = "info_text";
-                text.innerHTML = "<h1>Republic of Moldova: Protected Areas</h1>"
-                return text;
-            }
-        });
-        L.control.textbox = function (opts) {
-            return new L.Control.textbox(opts);
-        }
-        L.control.textbox({position: 'bottomright'}).addTo(map);
+        // L.Control.textbox = L.Control.extend({
+        //     onAdd: function (map) {
+        //         var text = L.DomUtil.create('div');
+        //         text.id = "info_text";
+        //         text.innerHTML = "<h1>Republic of Moldova: Protected Areas</h1>"
+        //         return text;
+        //     }
+        // });
+        // L.control.textbox = function (opts) {
+        //     return new L.Control.textbox(opts);
+        // }
+        // L.control.textbox({position: 'bottomright'}).addTo(map);
 
 
     }
 
 
 </script>
+
+<!-- Navbar Start -->
+<nav
+        class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-3 wow fadeIn"
+        data-wow-delay="0.1s"
+>
+    <a href="#" class="navbar-brand p-0">
+        <img class="img-fluid me-3" alt="Icon" src="{% static 'img/icon/icon.png' %}"/>
+        <h2 class="m-0 text-primary">Republic of Moldova: Protected Areas</h2>
+    </a>
+
+    <div class="navbar-nav ms-auto">
+        <a href="#" class="nav-item nav-link active">Home</a>
+        <a href="#" class="nav-item nav-link">About</a>
+    </div>
+    <a href="#" class="nav-item nav-link">Contact</a>
+
+</nav>
+<!-- Navbar End -->
 
 
 {% leaflet_map 'gis' callback="window.our_layers" %}
