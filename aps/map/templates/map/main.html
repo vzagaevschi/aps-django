@@ -10,17 +10,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Moldova Map</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
 
-        #gis {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 
     <!-- Favicon -->
     <link rel="icon" href="{% static 'img/icon/favicon.png' %}"/>
@@ -51,7 +41,7 @@
 
 
 <script type="application/javascript">
-    function our_layers(map, options) {
+    function layers(map, options) {
 
         var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -200,26 +190,9 @@
 
 </script>
 
-<!-- Navbar Start -->
-<nav
-        class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-lg-0 px-4 px-lg-3 wow fadeIn"
-        data-wow-delay="0.1s"
->
-    <a href="#" class="navbar-brand p-0">
-        <img class="img-fluid me-3" alt="Icon" src="{% static 'img/icon/icon.png' %}"/>
-        <h2 class="m-0 text-primary">Republic of Moldova: Protected Areas</h2>
-    </a>
 
-    <div class="navbar-nav ms-auto">
-        <a href="#" class="nav-item nav-link active">Home</a>
-        <a href="#" class="nav-item nav-link">About</a>
-    </div>
-    <a href="#" class="nav-item nav-link">Contact</a>
+{% include './block/navbar.html' %}
 
-</nav>
-<!-- Navbar End -->
-
-
-{% leaflet_map 'gis' callback="window.our_layers" %}
+{% leaflet_map 'gis' callback="window.layers" %}
 </body>
 </html>

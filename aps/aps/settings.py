@@ -146,7 +146,7 @@ GDAL_LIBRARY_PATH = r'c:\OSGeo4W\bin\gdal305.dll'
 GEOS_LIBRARY_PATH = r'C:\OSGeo4W\bin\geos_c.dll'
 
 LEAFLET_CONFIG = {
-    'DEFAULT_CENTER': (47.024, 28.832),
+    'DEFAULT_CENTER': (46.900, 28.590),
     'DEFAULT_ZOOM': 8,
     'MAX_ZOOM': 19,
     'MIN_ZOOM': 5,
