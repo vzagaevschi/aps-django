@@ -1,2 +1,2 @@
 # aps-django
-Areas Protected by State 
+Natural Areas Protected by State 
