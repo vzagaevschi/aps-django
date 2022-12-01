@@ -1,0 +1,122 @@
+{% load static %}
+{% load leaflet_tags %}
+
+<script type="application/javascript">
+    function layers(map, options) {
+
+        // var locality_cluster = L.markerClusterGroup();
+        var locality = new L.GeoJSON.AJAX("{% url 'map:locality' %}", {
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng,
+                    {
+                        radius: 3,
+                        fillColor: "#ff7800",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    });
+            },
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.name.toString());
+            }
+
+        });
+
+        // locality.addTo(locality_cluster);
+
+
+        var moldova = new L.GeoJSON.AJAX("{% url 'map:country' %}",
+            {style: moldovaStyle}
+        );
+
+        var district = new L.GeoJSON.AJAX("{% url 'map:district' %}",
+            {
+                style: districtStyle,
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.name.toString());
+                }
+            }
+        );
+
+        var area = new L.GeoJSON.AJAX("{% url 'map:area' %}",
+            {
+                style: arieStyle,
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.name.toString());
+                }
+            }
+        );
+
+        var area_point = new L.GeoJSON.AJAX("{% url 'map:area_point' %}",
+            {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng,
+                        {
+                            radius: 3,
+                            fillColor: "#32793a",
+                            color: "#000",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup(feature.properties.denumirea.toString());
+                }
+            }
+        );
+
+        var location = new L.GeoJSON.AJAX("{% url 'map:location' %}", {
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup(feature.properties.name.toString());
+            }
+        });
+
+        osm.addTo(map);
+        moldova.addTo(map);
+        area.addTo(map);
+
+        var baseLayers = {
+            "OpenStreetMap": osm,
+            "OpenTopoMap": OpenTopoMap
+        };
+
+        var groupedOverlays = {
+            "Administrativ": {
+                "Border of Moldova": moldova,
+                "Districts": district,
+                "Localities": locality,
+            },
+            "APS": {
+                "Protected Areas": area,
+                "Protected Areas (points)": area_point,
+            },
+            "Other": {
+                "Locations": location,
+            }
+        };
+        L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+
+
+        // L.Control.textbox = L.Control.extend({
+        //     onAdd: function (map) {
+        //         var text = L.DomUtil.create('div');
+        //         text.id = "info_text";
+        //         text.innerHTML = "<h1>Republic of Moldova: Protected Areas</h1>"
+        //         return text;
+        //     }
+        // });
+        // L.control.textbox = function (opts) {
+        //     return new L.Control.textbox(opts);
+        // }
+        // L.control.textbox({position: 'bottomright'}).addTo(map);
+
+
+    }
+
+
+</script>
+
+
+{% leaflet_map 'map' callback="window.layers" %}
